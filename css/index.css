@@ -1,0 +1,110 @@
+@keyframes sun-rot {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    color: white;
+    background-color: gray;
+}
+
+.i-top-logo {
+    font-size: 25px;
+    width: 20%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.i-top-logo:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.i-top {
+    width: 100%;
+    height: 40px;
+    background-color: rgb(9, 9, 78);
+    display: flex;
+    align-items: center;
+}
+
+.i-top-name {
+    width: 60%;
+    height: 40px;
+    font-family: apex;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.i-top-name-yellow {
+    margin-left: 5px;
+    color: rgb(255, 217, 0);
+}
+
+.i-med {
+    height: 450px;
+    width: 100%;
+    background-color: rgb(68, 68, 121);
+}
+
+.i-med-weather-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.i-med-wther-city {
+    font-family: apex-bold;
+    font-weight: lighter;
+    font-size: 50px;
+    text-align: center;
+}
+
+.i-med-wther-loc {
+    font-family: apex-light;
+    font-size: 20px;
+    text-align: center;
+}
+
+.i-med-wther-logo {
+    font-size: 100px;
+}
+
+.i-med-wther-temp-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: apex-light;
+}
+
+.i-med-wther-temp-lh {
+    display: flex;
+    flex-direction: column;
+}
+
+.i-med-wther-temp-now {
+    font-family: apex-bold;
+    margin-right: 10px;
+    font-size: 50px;
+    color: rgb(255, 217, 0);
+}
+
+.i-med-wther-temp-wther {
+    margin-left: 5px;
+    font-size: 50px;
+}
+
+.qi-100-fill {
+    animation: sun-rot 4s infinite linear;  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
