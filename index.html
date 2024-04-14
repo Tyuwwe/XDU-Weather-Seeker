@@ -10,9 +10,23 @@
   </head>
   <body>
     <div class="i-top">
-        <i class="icon-settings i-top-logo"></i>
+        <i id="set-btn" class="icon-settings i-top-logo"></i>
         <div class="i-top-name">WEATHER <span class="i-top-name-yellow">SEEKER</span></div>
-        <i class="icon-location_city i-top-logo"></i>
+        <i id="cit-btn" class="icon-location_city i-top-logo"></i>
+    </div>
+    <div id="sbar-l" class="i-left-slide-bar">
+        <div id="sbar-lcld" class="i-left-slide-bar-coloredbox">
+            <div class="i-left-slide-list-box">
+                <div class="i-left-slide-list">Settings</div>
+            </div>
+        </div>
+    </div>
+    <div id="sbar-r" class="i-right-slide-bar">
+        <div id="sbar-rcld" class="i-right-slide-bar-coloredbox">
+            <div class="i-right-slide-list-box">
+                <div class="i-right-slide-list">Saved Cities</div>
+            </div>
+        </div>
     </div>
     <div class="i-med">
         <div class="i-med-weather-container">
@@ -34,7 +48,30 @@
         </div>
     </div>
     <div class="i-bot">
-
+        <div class="i-bot-condt">
+            <div class="i-bot-condt-title">天气质量</div>
+            <div class="i-bot-condt-stitle">Weather Condition</div>
+            <div class="i-bot-condt-infobox">
+                <div class="i-bot-condt-left">
+                    <div class="i-bot-condt-left-text">S</div>
+                </div>
+                <div class="i-bot-condt-right-stline"></div>
+                <div class="i-bot-condt-right">
+                    <div class="i-bot-condt-right-title">AQI</div>
+                    <div class="i-bot-condt-right-value">65</div>
+                </div>
+                <div class="i-bot-condt-right-stline"></div>
+                <div class="i-bot-condt-right">
+                    <div class="i-bot-condt-right-title">PM2.5</div>
+                    <div class="i-bot-condt-right-value">43</div>
+                </div>
+                <div class="i-bot-condt-right-stline"></div>
+                <div class="i-bot-condt-right">
+                    <div class="i-bot-condt-right-title">PM10</div>
+                    <div class="i-bot-condt-right-value">22</div>
+                </div>
+            </div>
+        </div>
     </div>
   </body>
   <script src="./js/index.js"></script>
