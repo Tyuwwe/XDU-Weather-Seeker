@@ -34,9 +34,6 @@ cities_btn.addEventListener("click", () => {
         r_slide_cld.style.width = "80%";
     }
     bOpenedRight = !bOpenedRight;
-<<<<<<< Updated upstream
-})
-=======
 });
 
 let selected_city = "city-0";
@@ -172,4 +169,3 @@ function updateCityDetails(cityID) {
         document.getElementById("pm10").textContent = data.pm10;
     }
 }
->>>>>>> Stashed changes
