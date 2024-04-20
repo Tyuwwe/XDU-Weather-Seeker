@@ -84,8 +84,9 @@ const cityData = {
 // 检查localStorage是否有存储的数据
 if (localStorage.getItem("selectedCity")) {
     const selectedCity = localStorage.getItem("selectedCity");
-    loadCityData(selectedCity);
+    updateCityDetails(selectedCity);
 }
+
 console.log("check");
 
 const all_city = document.getElementsByClassName("i-right-slide-slist-item");
