@@ -123,32 +123,10 @@ for (i = 0; i < all_city.length; ++i) {
             localStorage.setItem("selectedCity", e.target.id);
         }
     });
-<<<<<<< Updated upstream
-
+    
     if (localStorage.getItem("selectedCity")) {
         
-    }
-
-    all_city[i].addEventListener("mousedown", (event) => {   
-        mouse_pos = event.screenX;
-        bClicked = true;
-        clickedID = event.target.id;
-    });
-    all_city[i].addEventListener("mousemove", (event) => {
-        offsetX = event.screenX - mouse_pos;
-        if (bClicked) {
-            document.getElementById(event.target.id).style = "transform: translateX(" + offsetX + "px);";
-        }
-    });
-    all_city[i].addEventListener("mouseup", (e) => {
-        bClicked = false;
-        document.getElementById(clickedID).style = "";
-        if (Math.abs(offsetX) > 100) {
-            //document.getElementById("slist-box").removeChild(document.getElementById(clickedID));
-        }
-    });
-=======
->>>>>>> Stashed changes
+    }es
 }
 
 function updateWeatherInfo(cityName) {
