@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width">
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=YGBXPyx6UzbWaxKPJAFPqP3W1V7ibX1n"></script>
     <link rel="stylesheet" type="text/css" href="./css/index.css">
     <link rel="stylesheet" type="text/css" href="./content/font-style.css">
     <link href="https://cdn.jsdelivr.net/npm/qweather-icons@1.6.0/font/qweather-icons.css" rel="stylesheet">
@@ -24,6 +25,11 @@
                         <div class="i-left-slide-slist-item-text">清空所有已保存城市</div>
                         <i class="icon-keyboard_arrow_right ico-slide"></i>
                     </div>
+                    <div id="clear-cache" class="i-left-slide-slist-item">
+                        <i class="icon-delete ico-slide-left"></i>
+                        <div class="i-left-slide-slist-item-text">清空缓存</div>
+                        <i class="icon-keyboard_arrow_right ico-slide"></i>
+                    </div>
                     <div class="i-left-slide-slist-item">
                         <i class="icon-info ico-slide-left"></i>
                         <div class="i-left-slide-slist-item-text">关于 <span class="ws-font">Weather Seeker</span></div>
@@ -38,19 +44,19 @@
             <div class="i-right-slide-list-box">
                 <div class="i-right-slide-list">Saved Cities</div>
                 <div id="slist-box" class="i-right-slide-slist-box">
-                    <div id="city-0" class="i-right-slide-slist-item">
-                        <div class="i-right-slide-slist-item-name">长安区</div>
-                        <i class="icon-delete"></i>
+                    <div id="i-rbox" class="i-right-slide-item-cities">
                     </div>
-                    <div id="city-1" class="i-right-slide-slist-item">
-                        <div class="i-right-slide-slist-item-name">新城区</div>
-                    </div>
-                    <div id="city-2" class="i-right-slide-slist-item">
-                        <div class="i-right-slide-slist-item-name">雁塔区</div>
-                    </div>
+                    <div id="allmap"></div>
                     <div class="i-right-slide-slist-add">
-                        <i class="icon-add_circle ico-add-citi"></i>
-                        <div class="i-right-slide-slist-item-add">添加新的城市</div>
+                        <div class="i-right-slide-slist-add-infobox">
+                            <i class="icon-add_circle ico-add-citi"></i>
+                            <div class="i-right-slide-slist-item-add">添加新的城市</div>
+                        </div>
+                        <div class="i-right-slide-slist-nloc">
+                            <div class="i-right-slide-slist-nloc-itm" id="province"></div>
+                            <div class="i-right-slide-slist-nloc-itm" id="city"></div>
+                            <div class="i-right-slide-slist-nloc-itm" id="district"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -59,19 +65,20 @@
     <div class="i-med">
         <div class="i-med-weather-container">
             <div class="i-med-wther-logo-container">
-                <i class="qi-100-fill i-med-wther-logo"></i>
+                <i id="wlogo" class="qi-100-fill i-med-wther-logo"></i>
             </div>
             <div class="i-med-wther-top">
                 <div class="i-med-wther-temp-container">
                     <div class="i-med-wther-temp-now" id="nowtemp">24°C</div>
                     <div class="i-med-wther-temp-lh">
-                        <div class="i-med-wther-temp-low" id="mintemp">From 12°C</div>
-                        <div class="i-med-wther-temp-high" id="maxtemp">To 27°C</div>
+                        <div class="i-med-wther-temp-low">体感温度</div>
+                        <div class="i-med-wther-temp-high" id="feelslike">26°C</div>
                     </div>
                 </div>
+                <div class="i-med-wther-weather-now" id="noweather">多云 东南风</div>
                 <div class="i-med-wther-city" id="cityname">长安区</div>
                 <div class="i-med-wther-loc" id="cityname-en">Xi'an, CHINA</div>
-                <div class="i-med-wther-loc" id="cityname-date">2024/4/11</div>
+                <div class="i-med-wther-loc" id="cityname-date">更新时间：2020-06-30 22:00</div>
             </div>
         </div>
     </div>
@@ -99,8 +106,48 @@
                     <div class="i-bot-condt-right-value" id="pm10">22</div>
                 </div>
             </div>
+            <div class="i-bot-condt-from">数据来源：和风天气</div>
+        </div>
+        <div class="i-bot-condt i-bot-condt-l2">
+            <div class="i-bot-condt-title" id="quality">实时天气</div>
+            <div class="i-bot-condt-stitle" id="condit">Realtime Weather</div>
+            <div class="i-bot-condt-infobox">
+                <div class="i-bot-condt-right">
+                    <div class="i-bot-condt-right-title">风向</div>
+                    <div class="i-bot-condt-right-value" id="wdir">东南风</div>
+                </div>
+                <div class="i-bot-condt-right-stline"></div>
+                <div class="i-bot-condt-right">
+                    <div class="i-bot-condt-right-title">风力等级</div>
+                    <div class="i-bot-condt-right-value" id="wscal">2级</div>
+                </div>
+                <div class="i-bot-condt-right-stline"></div>
+                <div class="i-bot-condt-right">
+                    <div class="i-bot-condt-right-title">风速</div>
+                    <div class="i-bot-condt-right-value" id="wsped">3km/h</div>
+                </div>
+            </div>
+            <div class="i-bot-condt-infobox">
+                <div class="i-bot-condt-right">
+                    <div class="i-bot-condt-right-title">大气压强</div>
+                    <div class="i-bot-condt-right-value" id="wpres">1003hPa</div>
+                </div>
+                <div class="i-bot-condt-right-stline"></div>
+                <div class="i-bot-condt-right">
+                    <div class="i-bot-condt-right-title">相对湿度</div>
+                    <div class="i-bot-condt-right-value" id="wwet">72%</div>
+                </div>
+                <div class="i-bot-condt-right-stline"></div>
+                <div class="i-bot-condt-right">
+                    <div class="i-bot-condt-right-title">能见度</div>
+                    <div class="i-bot-condt-right-value" id="wvis">16km</div>
+                </div>
+            </div>
+            <div class="i-bot-condt-from">数据来源：和风天气</div>
         </div>
     </div>
+    
   </body>
   <script src="./js/index.js"></script>
+  <script src="./js/getloc.js"></script>
 </html>
