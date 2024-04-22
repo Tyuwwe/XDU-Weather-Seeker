@@ -123,6 +123,7 @@ for (i = 0; i < all_city.length; ++i) {
             localStorage.setItem("selectedCity", e.target.id);
         }
     });
+<<<<<<< Updated upstream
 
     if (localStorage.getItem("selectedCity")) {
         
@@ -146,6 +147,8 @@ for (i = 0; i < all_city.length; ++i) {
             //document.getElementById("slist-box").removeChild(document.getElementById(clickedID));
         }
     });
+=======
+>>>>>>> Stashed changes
 }
 
 function updateWeatherInfo(cityName) {
