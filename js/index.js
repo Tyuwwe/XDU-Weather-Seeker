@@ -22,6 +22,7 @@ function init_page() {
             right_bar_box.appendChild(new_city);
         }
         addClickEvent();
+        loadLocalData();
         // 检查localStorage是否有存储的数据
         if (localStorage.getItem("selectedCity")) {
             selected_city = localStorage.getItem("selectedCity");
