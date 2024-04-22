@@ -38,7 +38,7 @@ cities_btn.addEventListener("click", () => {
 
 let selected_city = "city-0";
 // write code here to load localstorage
-const cityData = {
+let cityData = {
     "city-0": {
         nowTemp: "24°C",
         minTemp: "From 12°C",
@@ -85,7 +85,15 @@ const cityData = {
 if (localStorage.getItem("selectedCity")) {
     const selectedCity = localStorage.getItem("selectedCity");
     updateCityDetails(selectedCity);
+
+    // 设置初始位置
+    const from_city = document.getElementById(selected_city);
+    const to_city = document.getElementById(selectedCity);
+    from_city.setAttribute("class", "i-right-slide-slist-item");
+    to_city.setAttribute("class", "i-right-slide-slist-item i-right-slide-item-selected");
+    selected_city = selectedCity;
 }
+
 
 console.log("check");
 
@@ -109,21 +117,17 @@ function updateWeatherInfo(cityName) {
 for (i = 0; i < all_city.length; ++i) {
     all_city[i].addEventListener("click", (e) => {
         if (1) {
-            let from_city = document.getElementById(selected_city);
-            let to_city = document.getElementById(e.target.id);
-            from_city.setAttribute("class", "i-right-slide-slist-item");
-            to_city.setAttribute("class", "i-right-slide-slist-item i-right-slide-item-selected");
-            selected_city = e.target.id;
-            
-            // 更新天气信息
+            toggleCitySelection(selected_city, e.target.id);
             updateWeatherInfo(e.target.textContent.trim());
-            // 更新城市详细信息
             updateCityDetails(e.target.id);
-            
-            // 保存选择的城市到localStorage
             localStorage.setItem("selectedCity", e.target.id);
         }
     });
+
+    if (localStorage.getItem("selectedCity")) {
+        
+    }
+
     all_city[i].addEventListener("mousedown", (event) => {   
         mouse_pos = event.screenX;
         bClicked = true;
@@ -152,7 +156,14 @@ function updateWeatherInfo(cityName) {
     }
 }
 
-// 更新城市详细信息函数
+function toggleCitySelection(currentCityID, newCityID) {
+    let from_city = document.getElementById(currentCityID);
+    let to_city = document.getElementById(newCityID);
+    from_city.setAttribute("class", "i-right-slide-slist-item");
+    to_city.setAttribute("class", "i-right-slide-slist-item i-right-slide-item-selected");
+    selected_city = newCityID;
+}
+
 // 更新城市详细信息函数
 function updateCityDetails(cityID) {
     const data = cityData[cityID];
