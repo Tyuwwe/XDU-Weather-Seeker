@@ -30,7 +30,21 @@ function init_page() {
         selected_city = localStorage.getItem("selectedCity");
         const selectedCity = localStorage.getItem("selectedCity");
         updateCityDetails(selectedCity);
-
+        console.log(selectedCity);
+    
+        // 去掉selectedCity中的前缀city-
+        const cityNameWithoutPrefix = selectedCity.replace("city-", "");
+        
+        // 匹配本地存储中的城市信息
+        const cities = JSON.parse(localStorage.getItem("cities")) || [];
+        const cityInfo = cities.find(city => city.name === cityNameWithoutPrefix);
+        if (cityInfo) {
+            fetchWeather(cityInfo.point); // 根据城市信息获取天气
+            updatecityname(cityInfo.city, cityInfo.district); // 更新城市名称
+        } else {
+            console.log("未找到对应城市的经纬度信息");
+        }
+    
         // 设置初始位置
         const from_city = document.getElementById(selected_city);
         const to_city = document.getElementById(selectedCity);
@@ -38,6 +52,7 @@ function init_page() {
         to_city.setAttribute("class", "i-right-slide-slist-item i-right-slide-item-selected");
         selected_city = selectedCity;
     }
+    
     else {
         // if no localstorage code here
         let def_cityData = {
@@ -289,6 +304,7 @@ function fetchWeather(nowpoint){
                                 // "降水量：" + weatherData.now.precip + "毫米<br>" +
                 document.getElementById("wpres").textContent =  weatherData.now.pressure + "hPA" ;
                 document.getElementById("see").textContent =  weatherData.now.vis + "km";
+                document.getElementById("wlogo").setAttribute("class", "qi-" + weatherData.now.icon + "-fill i-med-wther-logo");
                // 将天气信息显示在页面上
            } 
        })
@@ -322,28 +338,60 @@ function fetchWeather(nowpoint){
 };
    
  // 添加城市的点击事件处理程序
-document.getElementById("addcity").addEventListener("click", () => {
+ document.getElementById("addcity").addEventListener("click", () => {
     console.log(nowcity, nowdistrict, nowpoint);
-    // 创建一个新的div元素
-    let newdiv = document.createElement("div");
-    newdiv.setAttribute("class", "i-right-slide-slist-item");
-    // 设置新创建的div元素的文本内容为市和区
-    newdiv.textContent = nowcity + " " + nowdistrict + " (" + nowpoint + ")";
 
-    // 将新创建的div元素添加到特定的元素中，例如"i-rbox"
-    document.getElementById("i-rbox").appendChild(newdiv);
+    // 创建一个新的城市信息对象
+    let cityInfo = {
+        name: nowcity + " " + nowdistrict,
+        city: nowcity,
+        district: nowdistrict,
+        point: nowpoint
+    };
 
     // 将城市信息保存到本地存储
     let cities = JSON.parse(localStorage.getItem("cities")) || []; // 如果没有数据，则初始化为空数组
-    let cityInfo = {
-        name: nowcity + " " + nowdistrict,
-        city:nowcity,
-        district:nowdistrict,
-        point: nowpoint
-    };
     cities.push(cityInfo); // 添加城市信息到数组中
     localStorage.setItem("cities", JSON.stringify(cities)); // 将更新后的数组重新存储到本地存储中
+
+    // 添加新城市到页面上
+    addCityToPage(cityInfo);
+    addCityClickListener(cityInfo);
+
+    // 检查是否有选中的城市，如果有则高亮显示
+    const selectedCity = localStorage.getItem("selectedCity");
+    if (selectedCity) {
+        const cityNameWithoutPrefix = selectedCity.replace("city-", "");
+        const cityElement = document.getElementById("city-" + cityNameWithoutPrefix);
+        if (cityElement) {
+            cityElement.classList.add("i-right-slide-item-selected");
+        }
+    }
 });
+
+// 将城市信息添加到页面上
+// 将城市信息添加到页面上
+function addCityToPage(cityInfo) {
+    const right_bar_box = document.getElementById("i-rbox");
+    
+    // 创建新的城市元素
+    let new_city = document.createElement("div");
+    new_city.setAttribute("class", "i-right-slide-slist-item");
+    new_city.setAttribute("id", "city-" + cityInfo.name);
+    let new_city_name = document.createElement("div");
+    new_city_name.setAttribute("class", "i-right-slide-slist-item-name");
+    new_city_name.innerText = cityInfo.name;
+    let new_city_del = document.createElement("i");
+    new_city_del.setAttribute("class", "del-ico icon-delete");
+    new_city_del.setAttribute("id", cityInfo.name + "-del");
+
+    new_city.appendChild(new_city_name);
+    new_city.appendChild(new_city_del);
+
+    right_bar_box.appendChild(new_city);
+}
+
+
 
 
 function updatecityname(city ,district)
@@ -398,11 +446,43 @@ delButtons.forEach(button => {
         });
 });
 
+function addCityClickListener(cityInfo) {
+    let cityElement = document.getElementById("city-" + cityInfo.name);
+    cityElement.addEventListener('click', () => {
+        // 获取点击的城市元素的 id
+        const cityId = cityElement.id;
+        
+        // 从 id 中解析出城市名和区域名
+        const cityDistrict = cityId.split("-")[1];
+        
+        // 从本地存储中获取对应城市的经纬度信息
+        const cities = JSON.parse(localStorage.getItem("cities")) || [];
+        const cityInfo = cities.find(city => city.name === cityDistrict);
+        if (cityInfo) {
+            console.log("经纬度信息：", cityInfo.point);
+            fetchWeather(cityInfo.point);
+            updatecityname(cityInfo.city, cityInfo.district);
+            console.log(cityInfo.city, cityInfo.district);
+        } else {
+            console.log("未找到对应城市的经纬度信息");
+        }
 
+        // 移除之前选中城市的高亮显示样式
+        const selectedCityElement = document.querySelector(".i-right-slide-item-selected");
+        if (selectedCityElement) {
+            selectedCityElement.classList.remove("i-right-slide-item-selected");
+        }
 
+        // 添加点击的城市的高亮显示样式
+        cityElement.classList.add("i-right-slide-item-selected");
+    });
+}
 
 // 创建一个事件监听器函数返回经纬度
-let cityElements = document.querySelectorAll('[id^="city-"]');
+// 获取所有具有特定 class 的元素
+let cityElements = document.querySelectorAll('.i-right-slide-slist-item');
+
+// 遍历每个城市元素并添加点击事件监听器
 cityElements.forEach(cityElement => {
     cityElement.addEventListener('click', () => {
         // 获取点击的城市元素的 id
