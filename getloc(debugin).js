@@ -79,8 +79,8 @@ function fetchWeather(nowpoint){
            if (weatherData.code === "200") {
                // 构建天气信息字符串
                document.getElementById("cityname-date").textContent =  weatherData.now.obsTime ;    //观测时间
-               document.getElementById("nowtemp").textContent = weatherData.now.temp +"°C";  //温度 
-               document.getElementById("feelslike").textContent = weatherData.now.feelsLike +"°C";//体感温度
+               document.getElementById("nowtemp").textContent = weatherData.now.temp ;  //温度 
+               document.getElementById("feelslike").textContent = weatherData.now.feelsLike ;//体感温度
                document.getElementById("noweather").textContent= weatherData.now.text + " " + weatherData.now.windDir; //风向和天气
                document.getElementById("wdir").textContent =  weatherData.now.windDir ;//风向
                document.getElementById("wscal").textContent = weatherData.now.windSpeed + "km/h" ;
@@ -105,9 +105,9 @@ function fetchWeather(nowpoint){
            console.log("空气质量信息：", airData);
            if (airData.code === "200") {
                // 构建空气质量信息字符串
-               document.getElementById("aqi").textContent = airData.now.aqi ;
-               document.getElementById("pm10").textContent = airData.now.pm10 ;
-               document.getElementById("pm2.5").textContent =  airData.now.pm2p5;
+               var airQualityInfo = "空气质量指数：" + airData.now.aqi + "<br>" +
+                                    "PM10：" + airData.now.pm10 + "<br>" +
+                                    "PM2.5：" + airData.now.pm2p5;
           
            } 
        })
@@ -136,8 +136,6 @@ document.getElementById("addcity").addEventListener("click", () => {
     let cities = JSON.parse(localStorage.getItem("cities")) || []; // 如果没有数据，则初始化为空数组
     let cityInfo = {
         name: nowcity + " " + nowdistrict,
-        city:nowcity,
-        district:nowdistrict,
         point: nowpoint
     };
     cities.push(cityInfo); // 添加城市信息到数组中
@@ -145,10 +143,10 @@ document.getElementById("addcity").addEventListener("click", () => {
 });
 
 
-function updatecityname(city ,district)
+function updatecityname(province,city ,district)
 {
     document.getElementById("cityname").textContent = district;
-    document.getElementById("cityname-en").textContent = city;
+    document.getElementById("cityname-en").textContent = province+","+city;
 }
 // 添加所有删除按钮的点击事件监听器
 let delButtons = document.querySelectorAll('.del-ico');
@@ -201,25 +199,22 @@ delButtons.forEach(button => {
 
 
 // 创建一个事件监听器函数返回经纬度
-let cityElements = document.querySelectorAll('[id^="city-"]');
-cityElements.forEach(cityElement => {
-    cityElement.addEventListener('click', () => {
-        // 获取点击的城市元素的 id
-        const cityId = cityElement.id;
-        
-        // 从 id 中解析出城市名和区域名
-        const cityDistrict = cityId.split("-")[1];
-        
-        // 从本地存储中获取对应城市的经纬度信息
-        const cities = JSON.parse(localStorage.getItem("cities")) || [];
-        const cityInfo = cities.find(city => city.name === cityDistrict);
-        if (cityInfo) {
-            console.log("经纬度信息：", cityInfo.point);
-            fetchWeather(cityInfo.point);
-            updatecityname(cityInfo.city ,cityInfo.district)
-            console.log(cityInfo.city ,cityInfo.district);
-        } else {
-            console.log("未找到对应城市的经纬度信息");
-        }
-    });
-});
+function cityItemClickHandler(event) {
+    // 获取点击的城市元素的 id
+    const cityId = event.target.id;
+    
+    // 从 id 中解析出城市名和区域名
+    const cityDistrict = cityId.split("-")[1];
+    
+    // 从本地存储中获取对应城市的经纬度信息
+    const cities = JSON.parse(localStorage.getItem("cities")) || [];
+    const cityInfo = cities.find(city => city.name === cityDistrict);
+    if (cityInfo) {
+        console.log("经纬度信息：", cityInfo.point);
+        fetchWeather(cityInfo.point);
+
+
+    } else {
+        console.log("未找到对应城市的经纬度信息");
+    }
+}

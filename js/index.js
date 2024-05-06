@@ -1,41 +1,42 @@
+// 页面初始化函数
 function init_page() {
     const right_bar_box = document.getElementById("i-rbox");
-    if (localStorage.length > 0) {
-        let cityID = 0;
-        let cityJSON = JSON.parse(localStorage.getItem("cities"));
-        for (cityID = 0; cityID < cityJSON.length; ++cityID) {
-            let cityInfo = JSON.parse(localStorage.getItem(cityJSON[cityID]));
-            console.log(cityJSON[cityID])
-            let new_city = document.createElement("div");
-            new_city.setAttribute("class", "i-right-slide-slist-item");
-            new_city.setAttribute("id", "city-" + cityInfo.cityName);
-            let new_city_name = document.createElement("div");
-            new_city_name.setAttribute("class", "i-right-slide-slist-item-name");
-            new_city_name.innerText = cityInfo.cityNameEn.split("，")[1] + " " + cityInfo.cityName;
-            let new_city_del = document.createElement("i");
-            new_city_del.setAttribute("class", "del-ico icon-delete");
-            new_city_del.setAttribute("id", cityInfo.cityName + "-del");
+    let cities = JSON.parse(localStorage.getItem("cities")) || []; // 获取本地存储中的城市信息或初始化为空数组
 
-            new_city.appendChild(new_city_name);
-            new_city.appendChild(new_city_del);
+    // 遍历城市信息并显示到页面上
+    for (let cityID = 0; cityID < cities.length; ++cityID) {
+        let cityInfo = cities[cityID];
+        let new_city = document.createElement("div");
+        new_city.setAttribute("class", "i-right-slide-slist-item");
+        new_city.setAttribute("id", "city-" + cityInfo.name);
+        let new_city_name = document.createElement("div");
+        new_city_name.setAttribute("class", "i-right-slide-slist-item-name");
+        new_city_name.innerText = cityInfo.name;
+        let new_city_del = document.createElement("i");
+        new_city_del.setAttribute("class", "del-ico icon-delete");
+        new_city_del.setAttribute("id", cityInfo.name + "-del");
 
-            right_bar_box.appendChild(new_city);
-        }
-        addClickEvent();
-        loadLocalData();
-        // 检查localStorage是否有存储的数据
-        if (localStorage.getItem("selectedCity")) {
-            selected_city = localStorage.getItem("selectedCity");
-            const selectedCity = localStorage.getItem("selectedCity");
-            updateCityDetails(selectedCity);
-        
-            // 设置初始位置
-            const from_city = document.getElementById(selected_city);
-            const to_city = document.getElementById(selectedCity);
-            from_city.setAttribute("class", "i-right-slide-slist-item");
-            to_city.setAttribute("class", "i-right-slide-slist-item i-right-slide-item-selected");
-            selected_city = selectedCity;
-        }
+        new_city.appendChild(new_city_name);
+        new_city.appendChild(new_city_del);
+
+        right_bar_box.appendChild(new_city);
+    }
+
+    addClickEvent();
+    loadLocalData();
+
+    // 检查localStorage是否有存储的数据
+    if (localStorage.getItem("selectedCity")) {
+        selected_city = localStorage.getItem("selectedCity");
+        const selectedCity = localStorage.getItem("selectedCity");
+        updateCityDetails(selectedCity);
+
+        // 设置初始位置
+        const from_city = document.getElementById(selected_city);
+        const to_city = document.getElementById(selectedCity);
+        from_city.setAttribute("class", "i-right-slide-slist-item");
+        to_city.setAttribute("class", "i-right-slide-slist-item i-right-slide-item-selected");
+        selected_city = selectedCity;
     }
     else {
         // if no localstorage code here
@@ -211,8 +212,5 @@ for (i = 0; i < del_btns.length; ++i) {
     })
 }
 
-document.getElementById("clear-cache").addEventListener("click", () => {
-    localStorage.clear();
-})
 
 init_page();
