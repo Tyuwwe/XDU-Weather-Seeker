@@ -35,7 +35,7 @@ body {
     display: flex;
     align-items: center;
     position: fixed;
-    z-index: 999;
+    z-index: 995;
 }
 
 .i-top-name {
@@ -233,7 +233,7 @@ body {
     left: -120%;
     top: 0;
     backdrop-filter: blur(10px);
-    z-index: 998;
+    z-index: 990;
     transition-duration: 0.4s;
     opacity: 0;
 }
@@ -265,7 +265,7 @@ body {
     right: -120%;
     top: 0;
     backdrop-filter: blur(10px);
-    z-index: 998;
+    z-index: 990;
     transition-duration: 0.4s;
     opacity: 0;
     display: flex;
@@ -468,4 +468,29 @@ body {
     margin-left: 2px;
     margin-right: 2px;
     font-size: 15px;
+}
+
+@keyframes top-float-in {
+    from {top: -100px;}
+    to {top: 0px;}
+}
+
+.top-float-info {
+    transition-duration: 0.5s;
+    height: 80px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 996;
+    background-color: rgb(9, 9, 78);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    top: 0px;
+}
+
+.info-txt {
+    margin-left: 5px;
 }
