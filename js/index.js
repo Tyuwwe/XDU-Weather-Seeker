@@ -51,7 +51,7 @@ function init_page() {
         // 设置初始位置
         const from_city = document.getElementById(selected_city);
         const to_city = document.getElementById(selectedCity);
-        from_city.setAttribute("class", "i-right-slide-slist-item");
+        if(from_city) from_city.setAttribute("class", "i-right-slide-slist-item");
         to_city.setAttribute("class", "i-right-slide-slist-item i-right-slide-item-selected");
         selected_city = selectedCity;
     }
@@ -291,11 +291,12 @@ function fetchWeather(nowpoint) {
                 document.getElementById("feelslike").textContent = weatherData.now.feelsLike + "°C";//体感温度
                 document.getElementById("noweather").textContent = weatherData.now.text + " " + weatherData.now.windDir; //风向和天气
                 document.getElementById("wdir").textContent = weatherData.now.windDir;//风向
-                document.getElementById("wscal").textContent = weatherData.now.windSpeed + "km/h";
+                document.getElementById("wscal").textContent = weatherData.now.windScale + "级";
+                document.getElementById("wsped").textContent = weatherData.now.windSpeed + "km/h";
                 document.getElementById("wwet").textContent = weatherData.now.humidity + "%";
                 // "降水量：" + weatherData.now.precip + "毫米<br>" +
                 document.getElementById("wpres").textContent = weatherData.now.pressure + "hPA";
-                document.getElementById("see").textContent = weatherData.now.vis + "km";
+                document.getElementById("wvis").textContent = weatherData.now.vis + "km";
                 document.getElementById("wlogo").setAttribute("class", "qi-" + weatherData.now.icon + "-fill i-med-wther-logo");
                 // 将天气信息显示在页面上
             }
@@ -303,6 +304,7 @@ function fetchWeather(nowpoint) {
         .catch(error => {
             // 打印错误信息到控制台
             console.error('Error:', error);
+            floatInfo("查询天气失败。");
         });
 
     // 获取空气质量信息
@@ -324,6 +326,7 @@ function fetchWeather(nowpoint) {
             console.error('Error:', error);
             // 在页面上显示查询空气质量失败的消息
             document.getElementById("airQualityInfo").textContent = "查询空气质量失败，请检查输入的经纬度格式或网络连接。";
+            floatInfo("查询空气质量失败。");
         });
 };
 
@@ -448,6 +451,9 @@ function addDelEvent(cityName) {
             } else {
                 console.log('City not found');
             }
+        }
+        else {
+            floatInfo("无法删除当前选中城市！")
         }
     });
 }

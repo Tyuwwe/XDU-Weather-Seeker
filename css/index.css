@@ -494,3 +494,8 @@ body {
 .info-txt {
     margin-left: 5px;
 }
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
