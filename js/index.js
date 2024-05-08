@@ -294,7 +294,6 @@ function fetchWeather(nowpoint) {
                 document.getElementById("wscal").textContent = weatherData.now.windScale + "级";
                 document.getElementById("wsped").textContent = weatherData.now.windSpeed + "km/h";
                 document.getElementById("wwet").textContent = weatherData.now.humidity + "%";
-                // "降水量：" + weatherData.now.precip + "毫米<br>" +
                 document.getElementById("wpres").textContent = weatherData.now.pressure + "hPA";
                 document.getElementById("wvis").textContent = weatherData.now.vis + "km";
                 document.getElementById("wlogo").setAttribute("class", "qi-" + weatherData.now.icon + "-fill i-med-wther-logo");
@@ -335,33 +334,33 @@ function switchClass(aqi_num) {
     let a_cls_cir = document.getElementById("i-bot-cls-cir");
     if (aqi_num < 50) {
         a_cls.innerHTML = "S";
-        a_cls.style.color = "rgb(155, 255, 150)";
-        a_cls_cir.style.borderColor = "rgb(155, 255, 150)";
+        a_cls.style.color = "green";
+        a_cls_cir.style.borderColor = "green";
     }
     else if (aqi_num < 100) {
         a_cls.innerHTML = "A";
-        a_cls.style.color = "rgb(153, 213, 64)";
-        a_cls_cir.style.borderColor = "rgb(153, 213, 64)";
+        a_cls.style.color = "yellow";
+        a_cls_cir.style.borderColor = "yellow";
     }
     else if (aqi_num < 150) {
         a_cls.innerHTML = "B";
-        a_cls.style.color = "rgb(183, 213, 64)";
-        a_cls_cir.style.borderColor = "rgb(183, 213, 64)";
+        a_cls.style.color = "orange";
+        a_cls_cir.style.borderColor = "orange";
     }
     else if (aqi_num < 200) {
         a_cls.innerHTML = "C";
-        a_cls.style.color = "rgb(213, 202, 64)";
-        a_cls_cir.style.borderColor = "rgb(213, 202, 64)";
+        a_cls.style.color = "red";
+        a_cls_cir.style.borderColor = "red";
     }
     else if (aqi_num < 300) {
         a_cls.innerHTML = "D";
-        a_cls.style.color = "rgb(213, 112, 64)";
-        a_cls_cir.style.borderColor = "rgb(213, 112, 64)";
+        a_cls.style.color = "purple";
+        a_cls_cir.style.borderColor = "purple";
     }
     else {
         a_cls.innerHTML = "E";
-        a_cls.style.color = "rgb(213, 64, 64)";
-        a_cls_cir.style.borderColor = "rgb(213, 64, 64)";
+        a_cls.style.color = "brown";
+        a_cls_cir.style.borderColor = "brown";
     }
 }
 
