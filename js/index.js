@@ -272,7 +272,7 @@ map.addEventListener("click", function (e) {
 function fetchWeather(nowpoint) {
     // 获取输入框中的位置信息
     // 设置 API 密钥
-    var apiKey = "0168050587a84d2281bfc7d500d9be0d";
+    var apiKey = "your_qweather_api_key_here";
     // 构建天气 API 请求 URL
     var weatherApiUrl = "https://devapi.qweather.com/v7/weather/now?location=" + nowpoint + "&key=" + apiKey;
     // 构建空气质量 API 请求 URL
