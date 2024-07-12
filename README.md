@@ -24,4 +24,4 @@
 
 祝各位 XDUer 都能轻松过测！
 
-Developer: [Tyuwwe ](https://github.com/1324151534)& [CrossS](https://github.com/1825988774)
+Developer: [Tyuwwe ](https://github.com/tyuwwe)& [CrossS](https://github.com/1825988774)
